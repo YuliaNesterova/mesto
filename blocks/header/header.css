@@ -1,0 +1,5 @@
+.header {
+  width: calc(100% - 199px * 2);
+  margin: auto;
+  padding-top: 45px;
+}
