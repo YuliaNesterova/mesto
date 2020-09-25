@@ -1,0 +1,20 @@
+.popup__button {
+  background-color: #000000;
+  width: 100%;
+  max-height: 51px;
+  border-radius: 2px;
+  border: 0;
+  outline: none;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
+  text-align: center;
+  color: #FFFFFF;
+  padding: 13px 124px 18px 125px;
+  transition: opacity 0.3s;
+}
+
+.popup__button:hover {
+  opacity: 0.8;
+  cursor: url("/images/cursor.png"), auto;
+}
