@@ -1,0 +1,8 @@
+.profile__edit-button {
+  max-height: 24px;
+  transition: opacity 0.3s;
+}
+.profile__edit-button:hover {
+  opacity: 0.5;
+  cursor: url("/images/cursor.png"), auto;
+}

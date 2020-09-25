@@ -1,0 +1,9 @@
+.profile__add-button {
+align-self: center;
+transition: opacity 0.3s;
+}
+
+.profile__add-button:hover {
+  opacity: 0.5;
+  cursor: url("/images/cursor.png"), auto;
+}
