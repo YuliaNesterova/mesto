@@ -1,6 +1,7 @@
 .profile__edit-button {
   max-height: 24px;
   transition: opacity 0.3s;
+  align-self: center;
 }
 .profile__edit-button:hover {
   opacity: 0.5;

@@ -2,5 +2,6 @@
   width: calc(100% - 199px * 2);
   margin: 40px auto 0 auto;
   display: flex;
-  align-items: start;
+  align-items: center;
+
 }
