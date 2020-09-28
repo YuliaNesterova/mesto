@@ -1,8 +1,6 @@
 .profile__info {
-  margin-right: 246px;
   display: grid;
-  grid-template-columns: repeat(2, auto);
+  grid-template-columns: repeat(3, auto);
   align-items: end;
   align-self: center;
-
 }
