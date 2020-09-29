@@ -3,4 +3,5 @@
   height: calc(100% - 79px);
   object-fit: cover;
   border-radius: 10px 10px 0px 0px;
+  min-height: 282px;
 }
