@@ -6,7 +6,6 @@ let jobInput = document.querySelector(".popup__input_type_subtitle");
 let profileTitle = document.querySelector(".profile__title");
 let profileSubtitle = document.querySelector(".profile__subtitle");
 let formElement = document.querySelector(".popup__form");
-let submitButton = document.querySelector(".popup__button");
 
 const togglePopup = function togglePopup() {
   popup.classList.toggle("popup_opened");

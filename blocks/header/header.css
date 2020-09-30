@@ -2,7 +2,7 @@
   width: calc(100% - 199px * 2);
   margin: auto;
   padding-top: 45px;
-  border-bottom: 1px solid 	rgba(128,128,128, 0.5)
+  border-bottom: 1px solid 	rgba(128,128,128, 0.5);
 }
 
 @media (max-width: 950px) {
