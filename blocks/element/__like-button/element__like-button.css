@@ -7,6 +7,7 @@
   border: none;
   transition: opacity 0.3s;
   background: url("../../../images/like.svg") no-repeat;
+  align-self: start;
 }
 
 .element__like-button:hover {
