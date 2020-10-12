@@ -121,7 +121,7 @@ const getCards = function getCards(data) {
     imagePopupPicture.setAttribute("alt", data.name);
     imagePopupCaption.textContent = data.name;
   });
-  
+
   imagePopupCloseButton.addEventListener("click", toggleImagePopup);
 
   return card;

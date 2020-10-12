@@ -51,8 +51,10 @@
           <h2 class="popup__title">Новое место</h2>
           <form name="card" class="popup__form popup__form_type_add">
             <fieldset class="popup__field">
-              <input type="text" name="description" class="popup__input popup__input_type_description" placeholder="Название">
-              <input type="link" name="place-image" class="popup__input popup__input_type_link" placeholder="Ссылка на картинку">
+              <input type="text" name="description" class="popup__input popup__input_type_description"
+                placeholder="Название">
+              <input type="url" name="place-image" class="popup__input popup__input_type_link"
+                placeholder="Ссылка на картинку">
             </fieldset>
             <button class="popup__button popup__button_type_create" type="submit">Создать</button>
           </form>
@@ -60,11 +62,11 @@
       </section>
 
       <section class="popup popup_type_image">
-          <figure class="popup__container-image">
-            <button class="popup__close-button popup__close-button_type_image popup__close-button_position_side"></button>
-            <img class="popup__image" src="" alt="">
-            <figcaption class="popup__caption"></figcaption>
-          </figure>
+        <figure class="popup__container-image">
+          <button class="popup__close-button popup__close-button_type_image popup__close-button_position_side"></button>
+          <img class="popup__image" src="data:," alt="">
+          <figcaption class="popup__caption"></figcaption>
+        </figure>
       </section>
 
       <footer class="footer">
