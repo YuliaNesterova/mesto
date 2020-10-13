@@ -102,8 +102,8 @@ function getCard(data) {
   const cardImage = card.querySelector(".element__image");
 
   card.querySelector(".element__text").innerText = data.name;
-  card.querySelector(".element__image").setAttribute("src", data.link);
-  card.querySelector(".element__image").setAttribute("alt", data.name);
+  cardImage.setAttribute("src", data.link);
+  cardImage.setAttribute("alt", data.name);
 
   cardDeleteButton.addEventListener("click", handleCardRemove);
   cardLikeButton.addEventListener("click", () => toggleLike(cardLikeButton));
