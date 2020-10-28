@@ -61,17 +61,17 @@ const imagePopupPicture = document.querySelector(".popup__image");
 const imagePopupCaption = document.querySelector(".popup__caption");
 const popup = Array.from(document.querySelectorAll(".popup"));
 
-
-function togglePopup(popupElement) {
-    popupElement.classList.toggle("popup_opened");
-}
-
 function openPopup(popupElement) {
     popupElement.classList.add("popup_opened");
+
+    checkOpenValidity(popupElement);
 }
 
 function closePopup(popupElement) {
     popupElement.classList.remove("popup_opened");
+
+    clearInput(popupElement);
+    hideErrorClose(popupElement);
 }
 
 function fillAuto() {
@@ -119,7 +119,7 @@ function getCard(data) {
     cardLikeButton.addEventListener("click", () => toggleLike(cardLikeButton));
 
     cardImage.addEventListener("click", function () {
-        togglePopup(imagePopup);
+        openPopup(imagePopup);
 
         imagePopupPicture.setAttribute("src", data.link);
         imagePopupPicture.setAttribute("alt", data.name);
@@ -162,11 +162,43 @@ function handleEscPopup(popupElement) {
     }
 }
 
-window.addEventListener("keydown", function (evt) {
+function clearInput(popupElement) {
+    const popupInput = Array.from(popupElement.querySelectorAll(".popup__input"));
+    console.log(popupElement);
+    popupInput.forEach((inputElement) => {
+        inputElement.value = "";
+    });
+}
+
+function hideErrorClose(popupElement) {
+    const formElement = Array.from(popupElement.querySelectorAll(".popup__form"));
+
+    formElement.forEach((form) => {
+        const inputElement = Array.from(form.querySelectorAll(".popup__input"));
+        inputElement.forEach((input) => {
+            hideError(form, input);
+        });
+    });
+}
+
+function checkOpenValidity(popupElement) {
+    const formElement = Array.from(popupElement.querySelectorAll(".popup__form"));
+
+    formElement.forEach((form) => {
+        const buttonElement = Array.from(form.querySelectorAll(".popup__button"));
+
+        buttonElement.forEach((button) => {
+            toggleButtonState(form, button);
+        });
+    });
+}
+
+document.addEventListener("keydown", function (evt) {
     if (evt.key === "Escape") {
         popup.forEach((popupElement) => handleEscPopup(popupElement));
     }
 });
+
 editButton.addEventListener("click", fillAuto);
 popupCloseButtonEdit.addEventListener("click", () => closePopup(popupEdit));
 editFormElement.addEventListener("submit", handleEditFormSubmit);
