@@ -65,6 +65,12 @@ function openPopup(popupElement) {
     popupElement.classList.add("popup_opened");
 
     checkOpenValidity(popupElement);
+
+    document.addEventListener("keydown", (evt) => {
+        if(evt.key === "Escape") {
+            handleEscPopup(popupElement);
+        }
+    })
 }
 
 function closePopup(popupElement) {
@@ -72,6 +78,12 @@ function closePopup(popupElement) {
 
     clearInput(popupElement);
     hideErrorClose(popupElement);
+
+    document.removeEventListener("keydown", (evt) => {
+        if(evt.key === "Escape") {
+            handleEscPopup(popupElement);
+        }
+    })
 }
 
 function fillAuto() {
@@ -164,7 +176,7 @@ function handleEscPopup(popupElement) {
 
 function clearInput(popupElement) {
     const popupInput = Array.from(popupElement.querySelectorAll(".popup__input"));
-    console.log(popupElement);
+
     popupInput.forEach((inputElement) => {
         inputElement.value = "";
     });
@@ -192,12 +204,6 @@ function checkOpenValidity(popupElement) {
         });
     });
 }
-
-document.addEventListener("keydown", function (evt) {
-    if (evt.key === "Escape") {
-        popup.forEach((popupElement) => handleEscPopup(popupElement));
-    }
-});
 
 editButton.addEventListener("click", fillAuto);
 popupCloseButtonEdit.addEventListener("click", () => closePopup(popupEdit));
