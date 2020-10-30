@@ -3,9 +3,16 @@
     line-height: 15px;
     color: #FF0000;
     min-height: 30px;
-    min-width: 358px;
+    width: 358px;
 }
 
 .popup__input-error:last-child {
     margin-bottom: 18px;
+}
+
+@media (max-width: 630px) {
+    .popup__input-error {
+        width: 238px;
+        min-height: 45px;
+    }
 }
