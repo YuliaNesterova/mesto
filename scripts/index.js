@@ -55,9 +55,6 @@ const popup = Array.from(document.querySelectorAll(".popup"));
 function openPopup(popupElement) {
     popupElement.classList.add("popup_opened");
 
-    nameInput.value = profileTitle.textContent;
-    jobInput.value = profileSubtitle.textContent;
-
     checkOpenValidity(popupElement);
 
     document.addEventListener("keydown", (evt) => handleEscPopup(popupElement, evt));
@@ -180,7 +177,11 @@ popup.forEach((popup) => {
         }
     });
 });
-editButton.addEventListener("click", () => openPopup(popupEdit));
+editButton.addEventListener("click", () => {
+    nameInput.value = profileTitle.textContent;
+    jobInput.value = profileSubtitle.textContent;
+    openPopup(popupEdit);
+});
 editFormElement.addEventListener("submit", handleEditFormSubmit);
 profileAddButton.addEventListener("click", () => openPopup(popupAdd));
 addFormElement.addEventListener("submit", handleAddFormSubmit);
