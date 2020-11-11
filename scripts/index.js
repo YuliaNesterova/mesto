@@ -1,5 +1,8 @@
 import { Card } from './Card.js';
 import { FormValidator } from "./FormValidator.js";
+import { openPopup } from "./utils.js";
+import { initialCards } from "./initial-cards.js";
+import { validationParams } from "./constants.js";
 
 const popupEdit = document.querySelector(".popup_type_edit");
 const editButton = document.querySelector(".profile__edit-button");
@@ -7,71 +10,55 @@ const nameInput = document.querySelector(".popup__input_type_title");
 const jobInput = document.querySelector(".popup__input_type_subtitle");
 const profileTitle = document.querySelector(".profile__title");
 const profileSubtitle = document.querySelector(".profile__subtitle");
-const editFormElement = document.querySelector(".popup__form_type_edit");
+export const editFormElement = document.querySelector(".popup__form_type_edit");
 const profileAddButton = document.querySelector(".profile__add-button");
 const popupAdd = document.querySelector(".popup_type_add");
 const cardsContainer = document.querySelector(".elements__items");
-const initialCards = [
-    {
-        name: "Ущелье Викос",
-        link:
-            "https://images.unsplash.com/photo-1542322461-4a528f906952?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1952&q=80",
-    },
-    {
-        name: "Акрополь",
-        link:
-            "https://images.unsplash.com/photo-1599423217192-34da246be9e8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1868&q=80",
-    },
-    {
-        name: "Балос",
-        link:
-            "https://images.unsplash.com/photo-1531169356216-34b7e403b91c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1867&q=80",
-    },
-    {
-        name: "Метеора",
-        link:
-            "https://images.unsplash.com/photo-1552482496-3c03befc5c25?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80",
-    },
-    {
-        name: "Монемвасия",
-        link:
-            "https://images.unsplash.com/photo-1560454758-babbc0393c24?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80",
-    },
-    {
-        name: "Остров Лефкада",
-        link:
-            "https://images.unsplash.com/photo-1599953092601-03fe8d25340d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1485&q=80",
-    },
-];
-const validationParams = {
-    formSelector: '.popup__form',
-    inputSelector: '.popup__input',
-    submitButtonSelector: '.popup__button',
-    inactiveButtonClass: 'popup__button_inactive',
-    inputErrorClass: 'popup__input_invalid',
-};
-
-const addFormElement = document.querySelector(".popup__form_type_add");
+const cardsTemplateSelector = ".cards-template";
+export const addFormElement = document.querySelector(".popup__form_type_add");
 const descriptionInput = document.querySelector(
     ".popup__input_type_description"
 );
 const linkInput = document.querySelector(".popup__input_type_link");
-const popup = Array.from(document.querySelectorAll(".popup"));
-const formElement = Array.from(document.querySelector(".popup__form"));
+const popupCloseButtonEdit = document.querySelector(
+    ".popup__close-button_type_edit"
+);
+const popupCloseButtonAdd = document.querySelector(
+    ".popup__close-button_type_add"
+);
+const imagePopupCloseButton = document.querySelector(
+    ".popup__close-button_type_image"
+);
+export const imagePopup = document.querySelector(".popup_type_image");
+export const editFormElementValidation = new FormValidator(validationParams, editFormElement);
+editFormElementValidation.enableValidation(validationParams, editFormElement);
+export const addFormElementValidation = new FormValidator(validationParams, addFormElement);
+addFormElementValidation.enableValidation(validationParams, addFormElement);
 
-function openPopup(popupElement) {
-    popupElement.classList.add("popup_opened");
+function clearInput(popupElement) {
+    const popupInput = Array.from(popupElement.querySelectorAll(validationParams.inputSelector));
 
-    checkOpenValidity(popupElement);
+    popupInput.forEach((inputElement) => {
+        inputElement.value = "";
+    });
 }
 
 function closePopup(popupElement) {
     popupElement.classList.remove("popup_opened");
 
-    clearInput(popupElement);
-    hideErrorClose(popupElement);
+    const formElement = popupElement.querySelector(validationParams.formSelector)
 
-    document.removeEventListener("keydown", (evt) => handleEscPopup(popupElement, evt));
+    clearInput(popupElement);
+
+    if(formElement && formElement.classList.contains("popup__form_type_edit")) {
+        editFormElementValidation.checkOpenValidity(editFormElement);
+        editFormElementValidation.hideErrorClose(formElement, validationParams);
+    } else if(formElement && formElement.classList.contains("popup__form_type_add")) {
+        addFormElementValidation.checkOpenValidity(addFormElement);
+        addFormElementValidation.hideErrorClose(formElement, validationParams);
+    }
+    document.removeEventListener("keydown", (evt) => handleEscPopup(evt, popupElement));
+    document.removeEventListener("click", (evt) => handlePopupBackgroundClick(evt, popupElement));
 }
 
 function handleEditFormSubmit(evt) {
@@ -83,10 +70,15 @@ function handleEditFormSubmit(evt) {
     closePopup(popupEdit);
 }
 
+function createCard(data, templateSelector) {
+    const card = new Card().getCard(data, templateSelector);
+    return card;
+}
+
 function handleAddFormSubmit(evt) {
     evt.preventDefault();
 
-    const item = new Card().getCard({name:descriptionInput.value, link: linkInput.value}, ".cards-template");
+    const item = createCard({name:descriptionInput.value, link: linkInput.value}, cardsTemplateSelector);
     addFormElement.reset();
 
     cardsContainer.prepend(item);
@@ -94,63 +86,22 @@ function handleAddFormSubmit(evt) {
     closePopup(popupAdd);
 }
 
-function handleEscPopup(popupElement, evt) {
+export function handleEscPopup(evt, popupElement) {
     if (popupElement.classList.contains("popup_opened") && evt.key === "Escape") {
         closePopup(popupElement);
     }
 }
 
-function clearInput(popupElement) {
-    const popupInput = Array.from(popupElement.querySelectorAll(".popup__input"));
-
-    popupInput.forEach((inputElement) => {
-        inputElement.value = "";
-    });
+export function handlePopupBackgroundClick(evt, popupElement) {
+    if(evt.target.classList.contains("popup")) {
+        closePopup(popupElement);
+    }
 }
-
-function hideErrorClose(popupElement) {
-    const formElement = Array.from(popupElement.querySelectorAll(".popup__form"));
-
-    formElement.forEach((form) => {
-        const inputElement = Array.from(form.querySelectorAll(".popup__input"));
-        inputElement.forEach((input) => {
-            const error = new FormValidator().hideError(form, input, validationParams);
-        });
-    });
-}
-
-function checkOpenValidity(popupElement) {
-    const formElement = Array.from(popupElement.querySelectorAll(validationParams.formSelector));
-
-    formElement.forEach((form) => {
-        const buttonElement = Array.from(form.querySelectorAll(validationParams.submitButtonSelector));
-
-
-        buttonElement.forEach((button) => {
-            const toggleButton = new FormValidator().toggleButtonState(form, button, validationParams);
-        });
-    });
-}
-
-formElement.forEach((form) => {
-    const formValidation = new FormValidator(validationParams, form);
-    formValidation.enableValidation(validationParams, form);
-});
 
 initialCards.forEach((item) => {
-    const card = new Card().getCard(item, ".cards-template");
+    const card = createCard(item, ".cards-template");
 
     cardsContainer.append(card);
-});
-
-popup.forEach((popup) => {
-    popup.addEventListener("click", (evt) => {
-        if (evt.target.classList.contains("popup") || evt.target.classList.contains("popup__close-button")) {
-            closePopup(popup);
-        }
-
-    });
-    document.addEventListener("keydown", (evt) => handleEscPopup(popup, evt));
 });
 
 editButton.addEventListener("click", () => {
@@ -161,3 +112,6 @@ editButton.addEventListener("click", () => {
 editFormElement.addEventListener("submit", handleEditFormSubmit);
 profileAddButton.addEventListener("click", () => openPopup(popupAdd));
 addFormElement.addEventListener("submit", handleAddFormSubmit);
+popupCloseButtonEdit.addEventListener("click", () => closePopup(popupEdit));
+popupCloseButtonAdd.addEventListener("click", () => closePopup(popupAdd));
+imagePopupCloseButton.addEventListener("click", () => closePopup(imagePopup));

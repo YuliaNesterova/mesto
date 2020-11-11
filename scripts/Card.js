@@ -1,6 +1,8 @@
-const imagePopup = document.querySelector(".popup_type_image");
+import { openPopup } from "./utils.js";
+import { imagePopup } from "./index.js";
 const imagePopupPicture = document.querySelector(".popup__image");
 const imagePopupCaption = document.querySelector(".popup__caption");
+
 
 export class Card {
     constructor(data, templateSelector) {
@@ -16,33 +18,44 @@ export class Card {
         evt.target.closest(".element").remove();
     }
 
-    _handleOpenPopup(data) {
-        imagePopup.classList.add("popup_opened");
+    _handleOpenPopup(element, data) {
+        openPopup(element);
+
         imagePopupPicture.src = data.link;
         imagePopupPicture.alt = data.name;
         imagePopupCaption.textContent = data.name;
     }
 
-    getCard(data, templateSelector) {
+    _getTemplate(data, templateSelector) {
         const card = document.querySelector(templateSelector).content.cloneNode(true);
 
-        const cardDeleteButton = card.querySelector(".element__delete-button");
-        const cardLikeButton = card.querySelector(".element__like-button");
-        const cardImage = card.querySelector(".element__image");
         const cardText = card.querySelector(".element__text");
+        const cardImage = card.querySelector(".element__image");
 
         cardText.innerText = data.name;
         cardImage.setAttribute("src", data.link);
         cardImage.setAttribute("alt", data.name);
 
+        return card;
+    }
+
+    _setEventListeners(data) {
+        const cardDeleteButton = this._element.querySelector(".element__delete-button");
+        const cardLikeButton = this._element.querySelector(".element__like-button");
+        const cardImage = this._element.querySelector(".element__image");
+
         cardDeleteButton.addEventListener("click", this._handleCardRemove);
         cardLikeButton.addEventListener("click", () => this._toggleLike(cardLikeButton));
 
-        cardImage.addEventListener("click", () => this._handleOpenPopup(data));
+        cardImage.addEventListener("click", () => this._handleOpenPopup(imagePopup, data));
+    }
 
+    getCard(data, templateSelector) {
+        this._element = this._getTemplate(data, templateSelector)
 
+        this._setEventListeners(data);
 
-        return card;
+        return this._element;
     }
 }
 

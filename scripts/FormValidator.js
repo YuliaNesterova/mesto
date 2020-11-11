@@ -1,3 +1,5 @@
+import {validationParams} from "./constants.js";
+
 export class FormValidator {
     constructor(params, formElement) {
         this._params = params;
@@ -10,21 +12,34 @@ export class FormValidator {
         input.classList.add(params.inputErrorClass);
     }
 
-    hideError(form, input, params) {
+    _hideError(form, input, params) {
         const errorElement = form.querySelector(`#${input.id}-error`);
         errorElement.textContent = "";
         input.classList.remove(params.inputErrorClass);
     }
 
+    checkOpenValidity(form) {
+        const currentButtonElement = form.querySelector(validationParams.submitButtonSelector);
+        this._toggleButtonState(form, currentButtonElement, validationParams)
+    }
+
     _checkInputValidity(form, input, params) {
         if (input.checkValidity()) {
-            this.hideError(form, input, params);
+            this._hideError(form, input, params);
         } else {
             this._showError(form, input, params);
         }
     }
 
-    toggleButtonState(form, buttonElement, params) {
+    hideErrorClose(form, params) {
+        const currentInputElement = Array.from(form.querySelectorAll(validationParams.inputSelector));
+
+        currentInputElement.forEach((input) => {
+          this._hideError(form, input, params);
+      })
+    }
+
+    _toggleButtonState(form, buttonElement, params) {
         if (form.checkValidity()) {
             buttonElement.classList.remove(params.inactiveButtonClass);
             buttonElement.disabled = false;
@@ -42,10 +57,10 @@ export class FormValidator {
         formInput.forEach((input) => {
             input.addEventListener("input", (evt) => {
                 this._checkInputValidity(form, evt.target, params);
-                this.toggleButtonState(form, buttonElement, params);
+                this._toggleButtonState(form, buttonElement, params);
             });
         });
-       this.toggleButtonState(form, buttonElement, params);
+       this._toggleButtonState(form, buttonElement, params);
     }
 
     enableValidation(params, formElement) {
