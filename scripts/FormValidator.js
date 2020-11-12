@@ -19,8 +19,10 @@ export class FormValidator {
     }
 
     checkOpenValidity(form) {
-        const currentButtonElement = form.querySelector(validationParams.submitButtonSelector);
-        this._toggleButtonState(form, currentButtonElement, validationParams)
+       if(form) {
+            const currentButtonElement = form.querySelector(validationParams.submitButtonSelector);
+            this._toggleButtonState(form, currentButtonElement, validationParams)
+        }
     }
 
     _checkInputValidity(form, input, params) {
@@ -32,11 +34,13 @@ export class FormValidator {
     }
 
     hideErrorClose(form, params) {
-        const currentInputElement = Array.from(form.querySelectorAll(validationParams.inputSelector));
+       if(form) {
+            const currentInputElements = Array.from(form.querySelectorAll(validationParams.inputSelector));
 
-        currentInputElement.forEach((input) => {
-          this._hideError(form, input, params);
-      })
+            currentInputElements.forEach((input) => {
+                this._hideError(form, input, params);
+            })
+        }
     }
 
     _toggleButtonState(form, buttonElement, params) {

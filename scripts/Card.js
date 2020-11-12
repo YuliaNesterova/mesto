@@ -1,5 +1,5 @@
 import { openPopup } from "./utils.js";
-import { imagePopup } from "./index.js";
+import { imagePopup } from "./constants.js";
 const imagePopupPicture = document.querySelector(".popup__image");
 const imagePopupCaption = document.querySelector(".popup__caption");
 
