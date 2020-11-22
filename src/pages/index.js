@@ -1,12 +1,13 @@
-import Card from '../components/Card.js';
-import Section from "../components/Section.js";
-import FormValidator from "../components/FormValidator.js";
-import PopupWithForm from "../components/PopupWithForm.js";
-import UserInfo from "../components/UserInfo.js";
-import { handleCardClick, handleAddFormSubmit, handleEditFormSubmit, handleOpenValidation} from "../utils/utils.js";
-import { initialCards } from "../utils/initial-cards.js";
+import './index.css';
+import Card from '../scripts/components/Card.js';
+import Section from "../scripts/components/Section.js";
+import FormValidator from "../scripts/components/FormValidator.js";
+import PopupWithForm from "../scripts/components/PopupWithForm.js";
+import UserInfo from "../scripts/components/UserInfo.js";
+import { handleCardClick, handleAddFormSubmit, handleEditFormSubmit, handleOpenValidation} from "../scripts/utils/utils.js";
+import { initialCards } from "../scripts/utils/initial-cards.js";
 import { validationParams, editFormElement, addFormElement, cardsTemplateSelector, profileTitle, profileSubtitle,
-    nameInput, jobInput, elementsItemsSelector, editButton, profileAddButton} from "../utils/constants.js";
+    nameInput, jobInput, elementsItemsSelector, editButton, profileAddButton} from "../scripts/utils/constants.js";
 
 const cardList = new Section({
     items: initialCards,
