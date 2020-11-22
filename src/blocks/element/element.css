@@ -3,6 +3,7 @@
   border-radius: 10px;
   position: relative;
   max-width: 282px;
+  overflow: hidden;
 }
 
 @media (max-width: 1279px) {
@@ -16,3 +17,10 @@
     max-width: 350px;
   }
 }
+
+@media (max-width: 1115px) {
+  .element {
+    max-width: 260px;
+  }
+}
+

@@ -11,7 +11,7 @@
 <body class="root">
 <div class="page">
     <header class="header">
-        <img src="./images/header__logo.svg" alt="Место" class="header__logo">
+        <img src="images/header__logo.svg" alt="Место" class="header__logo">
     </header>
 
     <main class="content">
@@ -19,7 +19,7 @@
         <section class="profile">
 
             <div class="profile__info">
-                <img src="./images/profile__image.jpg" alt="Жак-Ив Кусто" class="profile__image">
+                <img src="images/profile__image.jpg" alt="Жак-Ив Кусто" class="profile__image">
                 <h1 class="profile__title">Жак-Ив Кусто</h1>
                 <button class="profile__edit-button" type="button"></button>
                 <p class="profile__subtitle">Исследователь океана</p>
@@ -60,7 +60,7 @@
                                id="description-input"
                                placeholder="Название" minlength="1" maxlength="30" required>
                         <span class="popup__input-error" id="description-input-error"></span>
-                        <input type="url" name="place-image" class="popup__input popup__input_type_link"
+                        <input type="url" name="image" class="popup__input popup__input_type_link"
                                id="place-image-input"
                                placeholder="Ссылка на картинку" required>
                         <span class="popup__input-error" id="place-image-input-error"></span>
@@ -95,11 +95,15 @@
         </div>
     </li>
 </template>
-
-<script src="scripts/index.js" type="module"></script>
-<script src="scripts/Card.js" type="module"></script>
-<script src="scripts/FormValidator.js" type="module"></script>
-<script src="scripts/utils.js" type="module"></script>
+<script src="scripts/components/Card.js" type="module"></script>
+<script src="scripts/components/PopupWithImage.js" type="module"></script>
+<script src="scripts/components/PopupWithForm.js" type="module"></script>
+<script src="scripts/components/Popup.js" type="module"></script>
+<script src="scripts/components/UserInfo.js" type="module"></script>
+<script src="scripts/components/Section.js" type="module"></script>
+<script src="scripts/components/FormValidator.js" type="module"></script>
+<script src="scripts/utils/utils.js" type="module"></script>
+<script src="scripts/pages/index.js" type="module"></script>
 
 </body>
 

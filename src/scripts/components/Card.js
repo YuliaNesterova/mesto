@@ -1,17 +1,14 @@
-import { openPopup } from "./utils.js";
-import { imagePopup } from "./constants.js";
-const imagePopupPicture = document.querySelector(".popup__image");
-const imagePopupCaption = document.querySelector(".popup__caption");
+import { imagePopup, likeButtonActiveClass } from "../utils/constants.js";
 
-
-export class Card {
-    constructor(data, templateSelector) {
+export default class Card {
+    constructor( {data, handleCardClick}, templateSelector){
         this._data = data;
         this._templateSelector = templateSelector;
+        this._handleCardclick = handleCardClick;
     }
 
    _toggleLike(element) {
-        element.classList.toggle("element__like-button_clicked");
+        element.classList.toggle(likeButtonActiveClass);
     }
 
     _handleCardRemove(evt) {
@@ -19,11 +16,7 @@ export class Card {
     }
 
     _handleOpenPopup(element, data) {
-        openPopup(element);
-
-        imagePopupPicture.src = data.link;
-        imagePopupPicture.alt = data.name;
-        imagePopupCaption.textContent = data.name;
+        this._handleCardclick(data);
     }
 
     _getTemplate(data, templateSelector) {

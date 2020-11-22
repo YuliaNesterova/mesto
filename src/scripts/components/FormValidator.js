@@ -1,6 +1,6 @@
-import {validationParams} from "./constants.js";
+import {validationParams} from "../utils/constants.js";
 
-export class FormValidator {
+export default class FormValidator {
     constructor(params, formElement) {
         this._params = params;
         this._formElement = formElement;
@@ -33,7 +33,7 @@ export class FormValidator {
         }
     }
 
-    hideErrorClose(form, params) {
+    hideErrorOpen(form, params) {
        if(form) {
             const currentInputElements = Array.from(form.querySelectorAll(validationParams.inputSelector));
 
