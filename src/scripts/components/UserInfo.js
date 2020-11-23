@@ -1,5 +1,3 @@
-import { profileTitle, profileSubtitle } from "../utils/constants.js";
-
 export default class UserInfo {
     constructor({userName, userProfession}) {
         this._userName = userName;

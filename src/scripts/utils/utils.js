@@ -21,16 +21,7 @@ export function handleAddFormSubmit(evt, valuesObj) {
     document.querySelector(elementsItemsSelector).prepend(newCard);
 }
 
-export function handleEditFormSubmit(evt, valuesObj) {
-    evt.preventDefault();
-
-    const newUserInfo = new UserInfo({userName: profileTitle, userProfession: profileSubtitle});
-    newUserInfo.setUserInfo({name: valuesObj.name, profession: valuesObj.profession});
-}
-
-export function handleOpenValidation(validationParams, formElement) {
-    const formValidation = new FormValidator(validationParams, formElement);
-
-    formValidation.hideErrorOpen(formElement, validationParams);
-    formValidation.checkOpenValidity(formElement)
+export function handleOpenValidation(validator) {
+        validator.hideErrorOpen();
+        validator.toggleButtonState();
 }

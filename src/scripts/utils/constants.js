@@ -13,8 +13,8 @@ const popupClass = "popup";
 const popupOpenClass = "popup_opened";
 
 const popupCloseButtonSelector = ".popup__close-button";
-const imagePopupPicture = document.querySelector(".popup__image");
-const imagePopupCaption = document.querySelector(".popup__caption");
+const imagePopupPictureSelector = ".popup__image";
+const imagePopupCaptionSelector = ".popup__caption";
 const imagePopupSelector = ".popup_type_image";
 const cardsTemplateSelector = ".cards-template";
 const elementsItemsSelector = ".elements__items";
@@ -27,5 +27,5 @@ const editButton = document.querySelector(".profile__edit-button");
 const profileAddButton = document.querySelector(".profile__add-button");
 
 export {imagePopup, editFormElement, addFormElement, popupClass, popupOpenClass, popupCloseButtonSelector,
-        imagePopupPicture, imagePopupCaption, imagePopupSelector, cardsTemplateSelector, elementsItemsSelector,
+    imagePopupPictureSelector, imagePopupCaptionSelector, imagePopupSelector, cardsTemplateSelector, elementsItemsSelector,
         profileTitle, profileSubtitle, nameInput, jobInput, likeButtonActiveClass, editButton, profileAddButton};

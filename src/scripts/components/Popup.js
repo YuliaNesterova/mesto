@@ -4,6 +4,8 @@ import { popupClass, popupOpenClass, popupCloseButtonSelector } from "../utils/c
 export default class Popup {
     constructor(popupSelector) {
         this._popup = document.querySelector(popupSelector);
+        this._handleBackgroundClick = this._handleBackgroundClick.bind(this);
+        this._handleEscClose = this._handleEscClose.bind(this);
     }
 
     _handleEscClose(evt) {
@@ -20,14 +22,14 @@ export default class Popup {
 
     open() {
         this._popup.classList.add(popupOpenClass);
-        document.addEventListener('keydown', this._handleEscClose.bind(this));
-        document.addEventListener("click", this._handleBackgroundClick.bind(this));
+        document.addEventListener('keydown', this._handleEscClose);
+        document.addEventListener("click", this._handleBackgroundClick);
     }
 
     close() {
         this._popup.classList.remove(popupOpenClass);
-        document.removeEventListener('keydown', this._handleEscClose.bind(this));
-        document.removeEventListener("click", this._handleBackgroundClick.bind(this));
+        document.removeEventListener('keydown', this._handleEscClose);
+        document.removeEventListener("click", this._handleBackgroundClick);
     }
 
     setEventListeners() {

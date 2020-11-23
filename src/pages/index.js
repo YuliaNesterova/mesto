@@ -4,10 +4,19 @@ import Section from "../scripts/components/Section.js";
 import FormValidator from "../scripts/components/FormValidator.js";
 import PopupWithForm from "../scripts/components/PopupWithForm.js";
 import UserInfo from "../scripts/components/UserInfo.js";
-import { handleCardClick, handleAddFormSubmit, handleEditFormSubmit, handleOpenValidation} from "../scripts/utils/utils.js";
+import { handleCardClick, handleAddFormSubmit, handleOpenValidation} from "../scripts/utils/utils.js";
 import { initialCards } from "../scripts/utils/initial-cards.js";
 import { validationParams, editFormElement, addFormElement, cardsTemplateSelector, profileTitle, profileSubtitle,
     nameInput, jobInput, elementsItemsSelector, editButton, profileAddButton} from "../scripts/utils/constants.js";
+
+
+const currentUserInfo = new UserInfo({userName: profileTitle, userProfession: profileSubtitle});
+
+function handleEditFormSubmit(evt, valuesObj) {
+    evt.preventDefault();
+
+    currentUserInfo.setUserInfo({name: valuesObj.name, profession: valuesObj.profession});
+}
 
 const cardList = new Section({
     items: initialCards,
@@ -18,17 +27,20 @@ const cardList = new Section({
     }
 }, elementsItemsSelector)
 
-const addForm = new PopupWithForm(".popup_type_add", handleAddFormSubmit, handleOpenValidation);
+const addFormElementValidation = new FormValidator(validationParams, addFormElement);
+addFormElementValidation.enableValidation();
+const editFormElementValidation = new FormValidator(validationParams, editFormElement);
+editFormElementValidation.enableValidation();
+
+
+const addForm = new PopupWithForm(".popup_type_add", handleAddFormSubmit, handleOpenValidation, addFormElementValidation);
 addForm.setEventListeners();
-const editForm = new PopupWithForm(".popup_type_edit", handleEditFormSubmit, handleOpenValidation);
+const editForm = new PopupWithForm(".popup_type_edit", handleEditFormSubmit, handleOpenValidation, editFormElementValidation);
 editForm.setEventListeners();
 
-const editFormElementValidation = new FormValidator(validationParams, editFormElement);
-editFormElementValidation.enableValidation(validationParams, editFormElement);
-const addFormElementValidation = new FormValidator(validationParams, addFormElement);
-addFormElementValidation.enableValidation(validationParams, addFormElement);
 
-const currentUserInfo = new UserInfo({userName: profileTitle, userProfession: profileSubtitle});
+
+
 
 editButton.addEventListener("click", () => {
     nameInput.value = currentUserInfo.getUserInfo().name;
