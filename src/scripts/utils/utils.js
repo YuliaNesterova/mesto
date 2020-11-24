@@ -1,9 +1,6 @@
-import { imagePopupSelector, addFormElement, cardsTemplateSelector, elementsItemsSelector, profileTitle,
-    profileSubtitle} from "./constants.js";
-import FormValidator from "../components/FormValidator.js";
+import { imagePopupSelector, addFormElement, cardsTemplateSelector, elementsItemsSelector} from "./constants.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import Card from "../components/Card.js";
-import UserInfo from "../components/UserInfo.js";
 
 export function handleCardClick({link, name}) {
     const popupImage = new PopupWithImage(imagePopupSelector);
