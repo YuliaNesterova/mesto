@@ -12,6 +12,7 @@
 }
 
 .element__delete-button:hover {
+  position: absolute;
   opacity: 0.5;
   cursor: url("../../../images/cursor.png"), auto;
 }
