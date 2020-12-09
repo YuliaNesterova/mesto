@@ -8,6 +8,7 @@
   padding: 34px 36px 36px 36px;
 }
 
+
 @media (max-width: 630px) {
   .popup__container {
     max-width: 282px;

@@ -1,10 +1,24 @@
+@keyframes beat {
+  0%, 20%, 60%, 100% {
+    transform: scale(1);
+  }
+
+  40% {
+    transform: scale(0.7);
+  }
+
+  80% {
+    transform: scale(0.8);
+  }
+}
+
 .element__like-button {
   margin: 5px 0 3px 0;
   width: 21px;
   height: 18px;
   outline: none;
   border: none;
-  transition: transform 0.3s;
+  transition: transform 0.2s linear;
   background: url("../../../images/like.svg") no-repeat;
   align-self: start;
 }
@@ -12,5 +26,6 @@
 .element__like-button:hover {
   opacity: 0.5;
   cursor: url("../../../images/cursor.png"), auto;
-  transform: scale(1.2);
+  transform: scale(0.9);
+  animation: beat 1.5s ease-in-out;
 }

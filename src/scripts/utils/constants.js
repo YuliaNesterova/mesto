@@ -32,8 +32,10 @@ const editProfilePicButton = document.querySelector(".profile__image-button");
 const editProfileSubmitButton = document.querySelector(".popup__button_type_edit");
 const addCardSubmitButton = document.querySelector(".popup__button_type_create");
 const newProfilePicSubmitButton = document.querySelector(".popup__button_type_edit-pic");
+const popupAnimationClass = "popup__open-animation";
+const imagePopupContainerSelector = ".popup__container-image";
 
 export {imagePopup, editFormElement, addFormElement, profilePicFormElement, popupClass, popupOpenClass, popupCloseButtonSelector,
         imagePopupPictureSelector, imagePopupCaptionSelector, imagePopupSelector, cardsTemplateSelector, elementsItemsSelector,
         profileTitle, profileSubtitle, profileImage, nameInput, jobInput, likeButtonActiveClass, editButton, profileAddButton, editProfilePicButton,
-        errorPopupSelector, editProfileSubmitButton, addCardSubmitButton, newProfilePicSubmitButton};
+        errorPopupSelector, editProfileSubmitButton, addCardSubmitButton, newProfilePicSubmitButton, popupAnimationClass, imagePopupContainerSelector};

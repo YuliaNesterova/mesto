@@ -1,0 +1,13 @@
+@keyframes slide {
+    from {
+        transform: translateY(110%);
+    }
+    to {
+        transform: translateY(0%);
+    }
+}
+
+.popup__open-animation {
+    /*animation: popup 0.7s;*/
+    animation: slide 0.4s;
+}

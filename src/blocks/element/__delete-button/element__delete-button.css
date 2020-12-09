@@ -8,11 +8,12 @@
   min-height: 19px;
   outline: none;
   border: none;
-  transition: opacity 0.3s;
+  transition: opacity 0.2s linear, transform 0.2s linear;
 }
 
 .element__delete-button:hover {
   position: absolute;
   opacity: 0.5;
   cursor: url("../../../images/cursor.png"), auto;
+  transform: scale(1.2);
 }

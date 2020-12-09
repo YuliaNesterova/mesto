@@ -7,4 +7,6 @@
 .popup__button_inactive:hover {
     opacity: 1;
     transform: none;
+    animation: none;
+    color: rgba(0, 0, 0, 0.2);
 }

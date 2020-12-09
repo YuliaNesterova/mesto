@@ -20,13 +20,14 @@
     background-size: 26px;
     visibility: hidden;
     opacity: 0;
-    transition: visibility 0.5s, opacity 0.3s linear;
+    transition: visibility 0.5s, opacity 0.3s linear, transform 0.3s linear;
 }
 
 .profile__image-button:hover::before {
     visibility: visible;
     opacity: 0.8;
     cursor: url("../../../images/cursor.png"), auto;
+    transform: scale(1.2);
 }
 
 @media (max-width: 630px) {
