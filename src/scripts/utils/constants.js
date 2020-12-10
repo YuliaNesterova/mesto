@@ -18,6 +18,7 @@ const imagePopupPictureSelector = ".popup__image";
 const imagePopupCaptionSelector = ".popup__caption";
 const imagePopupSelector = ".popup_type_image";
 const errorPopupSelector = ".popup_type_error";
+const deletePopupSelector = ".popup_type_delete";
 const cardsTemplateSelector = ".cards-template";
 const elementsItemsSelector = ".elements__items";
 const profileTitle = document.querySelector(".profile__title");
@@ -34,8 +35,13 @@ const addCardSubmitButton = document.querySelector(".popup__button_type_create")
 const newProfilePicSubmitButton = document.querySelector(".popup__button_type_edit-pic");
 const popupAnimationClass = "popup__open-animation";
 const imagePopupContainerSelector = ".popup__container-image";
+const submitButtonRenderingText = "Сохранение...";
+const submitButtonInitialText = "Сохранить";
+const deleteButtonRenderingText = "Удаление...";
+const deleteButtonInitialText = "Да";
 
 export {imagePopup, editFormElement, addFormElement, profilePicFormElement, popupClass, popupOpenClass, popupCloseButtonSelector,
         imagePopupPictureSelector, imagePopupCaptionSelector, imagePopupSelector, cardsTemplateSelector, elementsItemsSelector,
         profileTitle, profileSubtitle, profileImage, nameInput, jobInput, likeButtonActiveClass, editButton, profileAddButton, editProfilePicButton,
-        errorPopupSelector, editProfileSubmitButton, addCardSubmitButton, newProfilePicSubmitButton, popupAnimationClass, imagePopupContainerSelector};
+        errorPopupSelector, editProfileSubmitButton, addCardSubmitButton, newProfilePicSubmitButton, popupAnimationClass, imagePopupContainerSelector,
+    submitButtonRenderingText, submitButtonInitialText, deleteButtonRenderingText, deleteButtonInitialText, deletePopupSelector};

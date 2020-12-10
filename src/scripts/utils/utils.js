@@ -1,38 +1,57 @@
-import { imagePopupSelector, errorPopupSelector} from "./constants.js";
+import {
+    imagePopupSelector,
+    errorPopupSelector,
+    deletePopupSelector,
+    deleteButtonRenderingText,
+    deleteButtonInitialText
+} from "./constants.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithButton from "../components/PopupWithButton.js";
 import PopupWithError from "../components/PopupWithError.js";
 
-export function renderLoading(isLoading, button) {
+const errorPopup = new PopupWithError(errorPopupSelector);
+errorPopup.setEventListeners();
+const popupImage = new PopupWithImage(imagePopupSelector);
+popupImage.setEventListeners();
+const cardDeletePopup = new PopupWithButton(deletePopupSelector, handleDeleteButtonSubmit);
+cardDeletePopup.setEventListeners();
+
+export function renderLoading(isLoading, button, renderingText, initialText) {
     if(isLoading) {
-        button.innerText = "Сохранение...";
+        button.innerText = renderingText;
     } else {
-        button.innerText = "Сохранить";
+        button.innerText = initialText;
     }
 }
 export function handleError(error) {
-        const popup = new PopupWithError(errorPopupSelector);
-        popup.fillErrorField(error)
-        popup.open();
+    console.log(error)
+        errorPopup.fillErrorField(error)
+        errorPopup.open();
 }
+
 export function handleCardClick({link, name}) {
-    const popupImage = new PopupWithImage(imagePopupSelector);
     popupImage.open({link, name});
-    popupImage.setEventListeners();
 }
 
-export function handleDeleteButtonSubmit(evt, api, cardId, deleteButton) {
+export function handleDeleteButtonSubmit(evt, api, cardId, element, submitButton) {
     evt.preventDefault();
+    renderLoading(true, submitButton, deleteButtonRenderingText, deleteButtonInitialText);
     if(evt.type === "submit") {
-        api.deleteCard(cardId);
-        deleteButton.closest(".element").remove();
+    api.deleteCard(cardId).then(() => {
+        element.remove();
+        cardDeletePopup.close();
+    })
+        .finally(() => {
+            renderLoading(false, submitButton, deleteButtonRenderingText, deleteButtonInitialText);
+        })
+        .catch(() => {
+            handleError("Неизвестная ошибка, попробуйте еще раз");
+        });
 }
 }
 
-export function handleCardRemove(cardId, api, deleteButton) {
-    const cardDeletePopup = new PopupWithButton(".popup_type_delete", handleDeleteButtonSubmit, api, cardId, deleteButton);
-    cardDeletePopup.setEventListeners();
-    cardDeletePopup.open();
+export function handleCardRemove(cardId, api, element) {
+    cardDeletePopup.open(cardId, api, element);
 }
 
 export function handleOpenValidation(validator) {

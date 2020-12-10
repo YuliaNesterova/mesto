@@ -2,25 +2,25 @@
   background-color: #ffffff;
   border-radius: 10px;
   position: relative;
-  max-width: 282px;
+  width: 282px;
   overflow: hidden;
 }
 
 @media (max-width: 1279px) {
   .element {
-    max-width: 250px;
+    width: 250px;
   }
 }
 
 @media (max-width: 1199px) {
   .element {
-    max-width: 350px;
+    width: 350px;
   }
 }
 
 @media (max-width: 1115px) {
   .element {
-    max-width: 260px;
+    width: 260px;
   }
 }
 

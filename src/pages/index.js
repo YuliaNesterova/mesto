@@ -3,17 +3,34 @@ import Card from '../scripts/components/Card.js';
 import Section from "../scripts/components/Section.js";
 import FormValidator from "../scripts/components/FormValidator.js";
 import PopupWithForm from "../scripts/components/PopupWithForm.js";
-import PopupWithError from "../scripts/components/PopupWithError.js";
 import Api from "../scripts/components/Api.js";
 import UserInfo from "../scripts/components/UserInfo.js";
 import { handleCardClick, handleOpenValidation, handleCardRemove, handleError, renderLoading} from "../scripts/utils/utils.js";
-import { validationParams, editFormElement, addFormElement, profilePicFormElement, cardsTemplateSelector, profileTitle, profileSubtitle, profileImage,
-        nameInput, jobInput, elementsItemsSelector, editButton, profileAddButton, editProfilePicButton, editProfileSubmitButton,
-        addCardSubmitButton, newProfilePicSubmitButton} from "../scripts/utils/constants.js";
+import {
+    validationParams,
+    editFormElement,
+    addFormElement,
+    profilePicFormElement,
+    cardsTemplateSelector,
+    profileTitle,
+    profileSubtitle,
+    profileImage,
+    nameInput,
+    jobInput,
+    elementsItemsSelector,
+    editButton,
+    profileAddButton,
+    editProfilePicButton,
+    editProfileSubmitButton,
+    addCardSubmitButton,
+    newProfilePicSubmitButton,
+    submitButtonRenderingText,
+    submitButtonInitialText, likeButtonActiveClass
+} from "../scripts/utils/constants.js";
 
 const api = new Api({baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-18',
     authorization: '04df758b-41ec-45dd-81f7-1b0f03936357', contentType: 'application/json'}, handleError);
-const initialCards = api.getInitialCards();
+const initialCards =  api.getInitialCards();
 
 const currentUserInfo = new UserInfo({userName: profileTitle, userProfession: profileSubtitle, userAvatar: profileImage});
 const user = api.getUserInfo();
@@ -21,65 +38,100 @@ user.then((data) => {
     currentUserInfo.setUserInfo({name: data.name, profession: data.about});
     currentUserInfo.setUserPic(data.avatar);
 })
+    .catch(() => {
+        handleError("Неизвестная ошибка, попробуйте еще раз");
+    });
+
+function createCard(cards, id) {
+    const card = new Card({cards, handleCardClick,
+    handleCardLike: (cardId, likeButton, likeCounter) => {
+        if(likeButton.classList.contains(likeButtonActiveClass)) {
+           api.deleteLike(cardId).then((result) => {
+               card.putLike(likeButton, likeCounter, result);
+           })
+               .catch(() => {
+                   handleError("Неизвестная ошибка, попробуйте еще раз");
+               });
+        } else {
+            api.putLike(cardId).then((result) => {
+                card.deleteLike(likeButton, likeCounter, result);
+            })
+                .catch(() => {
+                    handleError("Неизвестная ошибка, попробуйте еще раз");
+                });
+        }
+    }}, cardsTemplateSelector, handleCardRemove, api, id);
+    const cardElement = card.getCard(cards, cardsTemplateSelector);
+    return cardElement;
+}
+
+const list = new Section({
+        renderer: (data, id) => {
+            list.addItem(createCard(data, id));
+        }
+    }, elementsItemsSelector
+);
 
 function handleUserPicEdit(evt, valuesObj) {
     evt.preventDefault();
-    renderLoading(true, newProfilePicSubmitButton);
+    renderLoading(true, newProfilePicSubmitButton, submitButtonRenderingText, submitButtonInitialText);
     const newUserPic = api.getNewUserPic(valuesObj);
 
     newUserPic.then((result) => {
         currentUserInfo.setUserPic(result.avatar);
+        profilePicForm.close();
     })
         .finally(() => {
-            renderLoading(false, newProfilePicSubmitButton);
-            profilePicForm.close();
+            renderLoading(false, newProfilePicSubmitButton, submitButtonRenderingText, submitButtonInitialText);
         })
+        .catch(() => {
+            handleError("Неизвестная ошибка, попробуйте еще раз");
+    });
 }
 
 function handleAddFormSubmit(evt, valuesObj) {
     evt.preventDefault();
-    renderLoading(true, addCardSubmitButton);
+    renderLoading(true, addCardSubmitButton, submitButtonRenderingText, submitButtonInitialText);
     const newCard = api.addNewCard(valuesObj);
-    newCard.then((data) => {
-        user.then((info) => {
-            const item = new Card({data, handleCardClick}, cardsTemplateSelector, handleCardRemove, api, info._id);
-            const newCard = item.getCard(data, cardsTemplateSelector);
-            document.querySelector(elementsItemsSelector).prepend(newCard);
+    Promise.all([newCard, user])
+        .then(([card, user]) => {
+            const newCard = createCard(card, user._id);
+            list.addNewItem(newCard);
+            addForm.close();
         })
-            .finally(() => {
-                renderLoading(false, addCardSubmitButton);
-                addForm.close();
-            })
-    });
+        .finally(() => {
+            renderLoading(false, addCardSubmitButton, submitButtonRenderingText, submitButtonInitialText);
+        })
+        .catch(() => {
+                handleError("Неизвестная ошибка, попробуйте еще раз");
+            });
     addFormElement.reset();
 }
+
+Promise.all([initialCards, user]).then(([cards, user]) => {
+    list.renderItems(cards, user._id);
+})
+    .catch(() => {
+        handleError("Неизвестная ошибка, попробуйте еще раз");
+    });
+
 function handleEditFormSubmit(evt, valuesObj) {
     evt.preventDefault();
     renderLoading(true, editProfileSubmitButton);
     const newUser = api.changeUserInfo(valuesObj);
     newUser.then((data) => {
         currentUserInfo.setUserInfo({name: data.name, profession: data.about});
+        editForm.close();
     })
         .finally(() => {
             renderLoading(false, editProfileSubmitButton);
-            editForm.close();
         })
+        .catch(() => {
+            handleError("Неизвестная ошибка, попробуйте еще раз");
+        });
 }
 
-initialCards.then((cards) => {
-    const cardList = new Section({
-        items: cards,
-        renderer: (cards) => {
 
-            user.then((data) => {
-                const card = new Card({cards, handleCardClick}, cardsTemplateSelector, handleCardRemove, api, data._id);
-                const cardElement = card.getCard(cards, cardsTemplateSelector);
-                cardList.addItem(cardElement);
-            })
-        }
-    }, elementsItemsSelector)
-    cardList.renderItems();
-})
 
 const addFormElementValidation = new FormValidator(validationParams, addFormElement);
 addFormElementValidation.enableValidation();
@@ -94,8 +146,6 @@ const editForm = new PopupWithForm(".popup_type_edit", handleEditFormSubmit, han
 editForm.setEventListeners();
 const profilePicForm = new PopupWithForm(".popup_type_edit-pic", handleUserPicEdit, handleOpenValidation, profilePicFormElementValidation, api, currentUserInfo);
 profilePicForm.setEventListeners();
-const errorPopup = new PopupWithError(".popup_type_error");
-errorPopup.setEventListeners();
 
 editButton.addEventListener("click", () => {
     nameInput.value = currentUserInfo.getUserInfo().name;

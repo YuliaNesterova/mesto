@@ -6,21 +6,20 @@ export default class Api {
         this._handleError = handleError;
     }
 
+    _getResponseData(res) {
+        if (!res.ok) {
+            return Promise.reject(this._handleError(`Ошибка ${res.status}`));
+        }
+        return res.json();
+    }
+
     getInitialCards() {
            return fetch(`${this._baseUrl}/cards`, {
                 headers: {
                     authorization: `${this._authorization}`
                 }
             })
-               .then((res) => {
-                   if(res.ok) {
-                       return res.json();
-                   }
-                   return Promise.reject(this._handleError(res.status));
-               })
-               .catch(() => {
-                   this._handleError("Неизвестная ошибка, попробуйте еще раз");
-               });
+               .then((res) => this._getResponseData(res));
         }
 
     getUserInfo() {
@@ -29,15 +28,7 @@ export default class Api {
                 authorization: `${this._authorization}`
             }
         })
-            .then((res) => {
-                if(res.ok) {
-                    return res.json();
-                }
-                return Promise.reject(this._handleError(res.status));
-            })
-            .catch(() => {
-                this._handleError("Неизвестная ошибка, попробуйте еще раз");
-            });
+            .then((res) => this._getResponseData(res));
     }
 
     changeUserInfo(object) {
@@ -52,15 +43,7 @@ export default class Api {
                 about: object.profession
             })
         })
-            .then((res) => {
-                if(res.ok) {
-                    return res.json();
-                }
-                return Promise.reject(this._handleError(`Ошибка ${res.status}`));
-            })
-            .catch(() => {
-                this._handleError("Неизвестная ошибка, попробуйте еще раз");
-            });
+            .then((res) => this._getResponseData(res));
     }
 
     addNewCard(object) {
@@ -75,15 +58,7 @@ export default class Api {
                 link: object.image
             })
         })
-            .then((res) => {
-                if(res.ok) {
-                    return res.json();
-                }
-                return Promise.reject(this._handleError(res.status));
-            })
-            .catch(() => {
-                this._handleError("Неизвестная ошибка, попробуйте еще раз");
-            });
+            .then((res) => this._getResponseData(res));
     }
 
     deleteCard(id) {
@@ -94,15 +69,7 @@ export default class Api {
                 'Content-Type': this._contentType
             },
         })
-            .then((res) => {
-                if(res.ok) {
-                    return res.json();
-                }
-                return Promise.reject(this._handleError(res.status));
-            })
-            .catch(() => {
-                this._handleError("Неизвестная ошибка, попробуйте еще раз");
-            });
+            .then((res) => this._getResponseData(res));
     }
 
     getNewUserPic(object) {
@@ -116,15 +83,7 @@ export default class Api {
                 avatar: object.user_pic
             })
         })
-            .then((res) => {
-                if(res.ok) {
-                    return res.json();
-                }
-                return Promise.reject(this._handleError(res.status));
-            })
-            .catch(() => {
-                this._handleError("Неизвестная ошибка, попробуйте еще раз");
-            });
+            .then((res) => this._getResponseData(res));
     }
 
     putLike(id) {
@@ -135,15 +94,7 @@ export default class Api {
                 'Content-Type': this._contentType
             }
         })
-            .then((res) => {
-                if(res.ok) {
-                    return res.json();
-                }
-                return Promise.reject(this._handleError(res.status));
-            })
-            .catch(() => {
-                this._handleError("Неизвестная ошибка, попробуйте еще раз");
-            });
+            .then((res) => this._getResponseData(res));
     }
 
     deleteLike(id) {
@@ -154,14 +105,6 @@ export default class Api {
                 'Content-Type': this._contentType
             }
         })
-            .then((res) => {
-                if(res.ok) {
-                    return res.json();
-                }
-                return Promise.reject(this._handleError(res.status));
-            })
-            .catch(() => {
-                this._handleError("Неизвестная ошибка, попробуйте еще раз");
-            });
+            .then((res) => this._getResponseData(res));
     }
     }

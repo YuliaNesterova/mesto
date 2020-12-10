@@ -3,11 +3,11 @@
         transform: translateY(110%);
     }
     to {
-        transform: translateY(0%);
+        transform: translateY(0), translateX(10px);
+
     }
 }
 
 .popup__open-animation {
-    /*animation: popup 0.7s;*/
     animation: slide 0.4s;
 }

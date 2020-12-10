@@ -1,14 +1,15 @@
 .element__image {
-  height: 282px;
+  min-height: 282px;
+  max-height: 282px;
+  min-width: 100%;
   object-fit: cover;
   object-position: center;
   border-radius: 10px 10px 0px 0px;
   display: block;
-  transition: opacity 0.3s linear, transform 0.3s linear;
+  transition: opacity 0.3s linear;
 }
 
 .element__image:hover {
   cursor: url("../../../images/cursor.png"), auto;
-  transform: scale(1.1) translateY(-4.5%);
-  opacity: 0.85;
+  opacity: 0.8;
 }

@@ -21,4 +21,7 @@
   .profile__add-button {
     width: 100%;
   }
+  .profile__add-button:hover {
+    transform: none;
+  }
 }

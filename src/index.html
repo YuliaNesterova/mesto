@@ -67,7 +67,7 @@
                                placeholder="Ссылка на картинку" required>
                         <span class="popup__input-error" id="place-image-input-error"></span>
                     </fieldset>
-                    <button class="popup__button popup__button_type_create" type="submit">Создать</button>
+                    <button class="popup__button popup__button_type_create" type="submit">Сохранить</button>
                 </form>
             </div>
         </section>
@@ -126,12 +126,14 @@
 <template class="cards-template">
     <li class="element">
         <img src="" alt="" class="element__image">
+        <img src="<%=require('./images/profile__image.jpg')%>" alt="" class="element__card-author">
+        <span class="element__author">,kf ,kf ,kf</span>
         <button class="element__delete-button"></button>
         <div class="element__description">
             <h2 class="element__text"></h2>
             <div class="element__likes">
                 <button class="element__like-button" type="button"></button>
-                <span class="element__like-counter">0</span>
+                <span class="element__like-counter"></span>
             </div>
 
         </div>

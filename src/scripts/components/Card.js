@@ -1,31 +1,45 @@
 import { imagePopup, likeButtonActiveClass } from "../utils/constants.js";
 
 export default class Card {
-    constructor( {data, handleCardClick}, templateSelector, handleCardRemove, api, userId){
+    constructor( {data, handleCardClick, handleCardLike}, templateSelector, handleCardRemove, api, userId){
         this._data = data;
         this._templateSelector = templateSelector;
         this._handleCardclick = handleCardClick;
         this._handleCardRemove = handleCardRemove;
+        this._handleCardLike = handleCardLike;
         this._api = api;
         this._userId = userId;
+
     }
 
-   _toggleLike(id, likeButton, likeCounter, api) {
-        if (likeButton.classList.contains(likeButtonActiveClass)) {
-            api.deleteLike(id).then((result) => {
-                likeButton.classList.remove(likeButtonActiveClass);
-                likeCounter.textContent = result.likes.length;
-            });
-        } else {
-            api.putLike(id).then((result) => {
-                likeButton.classList.add(likeButtonActiveClass);
-                likeCounter.textContent = result.likes.length;
-            });
-        }
+    putLike(likeButton, likeCounter, result) {
+    likeButton.classList.remove(likeButtonActiveClass);
+    likeCounter.textContent = result.likes.length;
+    }
+
+    deleteLike(likeButton, likeCounter, result) {
+        likeButton.classList.add(likeButtonActiveClass);
+        likeCounter.textContent = result.likes.length;
+    }
+
+    _toggleLike(id, likeButton, likeCounter) {
+        this._handleCardLike(id, likeButton, likeCounter);
     }
 
     _handleOpenPopup(element, data) {
         this._handleCardclick(data);
+    }
+
+    _toggleAuthorShow(element) {
+        element.classList.add("element__author_shown");
+    }
+
+    _toggleAuthorHide(element) {
+        element.classList.remove("element__author_shown");
+    }
+
+    _handleDeleteButtonClick(id, api, element) {
+        this._handleCardRemove(id, api, element);
     }
 
     _getTemplate(data, templateSelector) {
@@ -36,7 +50,11 @@ export default class Card {
         const likes = card.querySelector(".element__like-counter");
         const cardLikeButton = card.querySelector(".element__like-button");
         const deleteButton = card.querySelector(".element__delete-button");
+        const authorImage = card.querySelector(".element__card-author");
+        const cardAuthor = card.querySelector(".element__author");
 
+        cardAuthor.textContent = data.owner.name;
+        authorImage.setAttribute("src", data.owner.avatar)
         cardText.innerText = data.name;
         cardImage.setAttribute("src", data.link);
         cardImage.setAttribute("alt", data.name);
@@ -58,9 +76,14 @@ export default class Card {
         const cardImage = this._element.querySelector(".element__image");
         const cardId = data._id;
         const cardLikeCounter = this._element.querySelector(".element__like-counter");
+        const element = this._element.querySelector(".element");
+        const cardAuthor = this._element.querySelector(".element__author");
+        const authorImage = this._element.querySelector(".element__card-author");
 
-        cardDeleteButton.addEventListener("click", () => this._handleCardRemove(cardId, this._api, cardDeleteButton));
-        cardLikeButton.addEventListener("click", () => this._toggleLike(cardId, cardLikeButton, cardLikeCounter, this._api));
+        authorImage.addEventListener("mouseover", () => this._toggleAuthorShow(cardAuthor));
+        authorImage.addEventListener("mouseout", () => this._toggleAuthorHide(cardAuthor));
+        cardDeleteButton.addEventListener("click", () => this._handleDeleteButtonClick(cardId, this._api, element));
+        cardLikeButton.addEventListener("click", () => this._toggleLike(cardId, cardLikeButton, cardLikeCounter));
         cardImage.addEventListener("click", () => this._handleOpenPopup(imagePopup, data));
     }
 
