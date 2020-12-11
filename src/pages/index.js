@@ -117,14 +117,14 @@ Promise.all([initialCards, user]).then(([cards, user]) => {
 
 function handleEditFormSubmit(evt, valuesObj) {
     evt.preventDefault();
-    renderLoading(true, editProfileSubmitButton);
+    renderLoading(true, editProfileSubmitButton, submitButtonRenderingText, submitButtonInitialText);
     const newUser = api.changeUserInfo(valuesObj);
     newUser.then((data) => {
         currentUserInfo.setUserInfo({name: data.name, profession: data.about});
         editForm.close();
     })
         .finally(() => {
-            renderLoading(false, editProfileSubmitButton);
+            renderLoading(false, editProfileSubmitButton, submitButtonRenderingText, submitButtonInitialText);
         })
         .catch(() => {
             handleError("Неизвестная ошибка, попробуйте еще раз");

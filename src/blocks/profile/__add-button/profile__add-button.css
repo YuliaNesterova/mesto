@@ -14,7 +14,10 @@
 .profile__add-button:hover {
   opacity: 0.5;
   cursor: url("../../../images/cursor.png"), auto;
-  transform: scale(1.2);
+}
+
+.profile__add-button:active {
+  transform: scale(0.9);
 }
 
 @media (max-width: 630px) {
