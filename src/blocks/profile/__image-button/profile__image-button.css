@@ -26,8 +26,11 @@
 .profile__image-button:hover::before {
     visibility: visible;
     opacity: 0.8;
-    cursor: url("../../../images/cursor.png"), auto;
     transform: scale(1.2);
+}
+
+.profile__image-button:hover {
+    cursor: url("../../../images/cursor.png"), auto;
 }
 
 @media (max-width: 630px) {

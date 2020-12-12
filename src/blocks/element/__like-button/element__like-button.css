@@ -29,3 +29,14 @@
   transform: scale(0.9);
   animation: beat 1.5s ease-in-out;
 }
+
+@media(max-width: 630px) {
+  .element__like-button {
+    transition: none;
+  }
+  .element__like-button:hover {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+}
