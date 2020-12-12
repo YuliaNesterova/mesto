@@ -1,4 +1,5 @@
 .element__likes {
+    width: 21px;
     display: flex;
     flex-direction: column;
     align-items: center;
