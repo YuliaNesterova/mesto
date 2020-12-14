@@ -50,3 +50,11 @@
 @import url("../blocks/element/__card-author/element__card-author.css");
 @import url("../blocks/element/__author/element__author.css");
 @import url("../blocks/element/__author/_shown/element__author_shown.css");
+@import url("../blocks/loader/loader.css");
+@import url("../blocks/loader/_shown/loader_shown.css");
+@import url("../blocks/loader/__image/loader__image.css");
+@import url("../blocks/loader/__image/_size/loader__image_size_xl.css");
+@import url("../blocks/loader/__image/_size/loader__image_size_l.css");
+@import url("../blocks/loader/__image/_size/loader__image_size_m.css");
+@import url("../blocks/loader/__image/_size/loader__image_size_s.css");
+@import url("../blocks/loader/__image/_size/loader__image_size_xs.css");

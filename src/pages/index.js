@@ -5,7 +5,7 @@ import FormValidator from "../scripts/components/FormValidator.js";
 import PopupWithForm from "../scripts/components/PopupWithForm.js";
 import Api from "../scripts/components/Api.js";
 import UserInfo from "../scripts/components/UserInfo.js";
-import { handleCardClick, handleOpenValidation, handleCardRemove, handleError, renderLoading} from "../scripts/utils/utils.js";
+import { handleCardClick, handleOpenValidation, handleCardRemove, handleError, renderLoading, renderLoader} from "../scripts/utils/utils.js";
 import {
     validationParams,
     editFormElement,
@@ -34,13 +34,6 @@ const initialCards =  api.getInitialCards();
 
 const currentUserInfo = new UserInfo({userName: profileTitle, userProfession: profileSubtitle, userAvatar: profileImage});
 const user = api.getUserInfo();
-user.then((data) => {
-    currentUserInfo.setUserInfo({name: data.name, profession: data.about});
-    currentUserInfo.setUserPic(data.avatar);
-})
-    .catch(() => {
-        handleError("Неизвестная ошибка, попробуйте еще раз");
-    });
 
 function createCard(cards, id) {
     const card = new Card({cards, handleCardClick,
@@ -64,7 +57,6 @@ function createCard(cards, id) {
     const cardElement = card.getCard(cards, cardsTemplateSelector);
     return cardElement;
 }
-
 const list = new Section({
         renderer: (data, id) => {
             list.addItem(createCard(data, id));
@@ -108,12 +100,21 @@ function handleAddFormSubmit(evt, valuesObj) {
     addFormElement.reset();
 }
 
-Promise.all([initialCards, user]).then(([cards, user]) => {
-    list.renderItems(cards, user._id);
-})
-    .catch(() => {
-        handleError("Неизвестная ошибка, попробуйте еще раз");
-    });
+function renderPage() {
+    renderLoader(true);
+    Promise.all([initialCards, user]).then(([cards, user]) => {
+        list.renderItems(cards, user._id);
+        currentUserInfo.setUserInfo({name: user.name, profession: user.about});
+        currentUserInfo.setUserPic(user.avatar);
+    })
+        .finally(() => {
+            renderLoader(false);
+        })
+        .catch(() => {
+            handleError("Неизвестная ошибка, попробуйте еще раз");
+        });
+}
+
 
 function handleEditFormSubmit(evt, valuesObj) {
     evt.preventDefault();
@@ -130,8 +131,6 @@ function handleEditFormSubmit(evt, valuesObj) {
             handleError("Неизвестная ошибка, попробуйте еще раз");
         });
 }
-
-
 
 const addFormElementValidation = new FormValidator(validationParams, addFormElement);
 addFormElementValidation.enableValidation();
@@ -154,3 +153,5 @@ editButton.addEventListener("click", () => {
 });
 profileAddButton.addEventListener("click", () => addForm.open());
 editProfilePicButton.addEventListener("click", () => profilePicForm.open());
+
+renderPage();

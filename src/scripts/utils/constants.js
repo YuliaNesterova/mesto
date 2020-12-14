@@ -39,9 +39,12 @@ const submitButtonRenderingText = "Сохранение...";
 const submitButtonInitialText = "Сохранить";
 const deleteButtonRenderingText = "Удаление...";
 const deleteButtonInitialText = "Да";
+const loader = document.querySelector(".loader");
+const loaderShownClass = "loader_shown";
 
 export {imagePopup, editFormElement, addFormElement, profilePicFormElement, popupClass, popupOpenClass, popupCloseButtonSelector,
         imagePopupPictureSelector, imagePopupCaptionSelector, imagePopupSelector, cardsTemplateSelector, elementsItemsSelector,
         profileTitle, profileSubtitle, profileImage, nameInput, jobInput, likeButtonActiveClass, editButton, profileAddButton, editProfilePicButton,
         errorPopupSelector, editProfileSubmitButton, addCardSubmitButton, newProfilePicSubmitButton, popupAnimationClass, imagePopupContainerSelector,
-    submitButtonRenderingText, submitButtonInitialText, deleteButtonRenderingText, deleteButtonInitialText, deletePopupSelector};
+        submitButtonRenderingText, submitButtonInitialText, deleteButtonRenderingText, deleteButtonInitialText, deletePopupSelector,
+        loader, loaderShownClass};

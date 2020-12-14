@@ -3,7 +3,9 @@ import {
     errorPopupSelector,
     deletePopupSelector,
     deleteButtonRenderingText,
-    deleteButtonInitialText
+    deleteButtonInitialText,
+    loader,
+    loaderShownClass
 } from "./constants.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithButton from "../components/PopupWithButton.js";
@@ -16,6 +18,13 @@ popupImage.setEventListeners();
 const cardDeletePopup = new PopupWithButton(deletePopupSelector, handleDeleteButtonSubmit);
 cardDeletePopup.setEventListeners();
 
+export function renderLoader(isLoading) {
+    if(isLoading) {
+        loader.classList.add(loaderShownClass);
+    } else {
+        loader.classList.remove(loaderShownClass);
+    }
+}
 export function renderLoading(isLoading, button, renderingText, initialText) {
     if(isLoading) {
         button.innerText = renderingText;
