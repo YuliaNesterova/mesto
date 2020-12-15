@@ -28,8 +28,6 @@ import {
     submitButtonInitialText, likeButtonActiveClass
 } from "../scripts/utils/constants.js";
 
-renderLoader(true);
-
 const api = new Api({baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-18',
     authorization: '04df758b-41ec-45dd-81f7-1b0f03936357', contentType: 'application/json'}, handleError);
 const initialCards =  api.getInitialCards();
@@ -103,6 +101,7 @@ function handleAddFormSubmit(evt, valuesObj) {
 }
 
 function renderPage() {
+    renderLoader(true);
     Promise.all([initialCards, user]).then(([cards, user]) => {
         list.renderItems(cards, user._id);
         currentUserInfo.setUserInfo({name: user.name, profession: user.about});
