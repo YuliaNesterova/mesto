@@ -35,6 +35,8 @@ const initialCards =  api.getInitialCards();
 const currentUserInfo = new UserInfo({userName: profileTitle, userProfession: profileSubtitle, userAvatar: profileImage});
 const user = api.getUserInfo();
 
+renderLoader(true);
+
 function createCard(cards, id) {
     const card = new Card({cards, handleCardClick,
     handleCardLike: (cardId, likeButton, likeCounter) => {
@@ -100,8 +102,8 @@ function handleAddFormSubmit(evt, valuesObj) {
     addFormElement.reset();
 }
 
-function renderPage() {
-    renderLoader(true);
+
+
     Promise.all([initialCards, user]).then(([cards, user]) => {
         list.renderItems(cards, user._id);
         currentUserInfo.setUserInfo({name: user.name, profession: user.about});
@@ -113,7 +115,7 @@ function renderPage() {
         .catch(() => {
             handleError("Неизвестная ошибка, попробуйте еще раз");
         });
-}
+
 
 
 function handleEditFormSubmit(evt, valuesObj) {
@@ -154,4 +156,3 @@ editButton.addEventListener("click", () => {
 profileAddButton.addEventListener("click", () => addForm.open());
 editProfilePicButton.addEventListener("click", () => profilePicForm.open());
 
-renderPage();
